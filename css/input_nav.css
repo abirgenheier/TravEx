@@ -1,0 +1,28 @@
+.collage{
+    position: inline;
+    overflow: hidden;
+}
+.collage_photos {
+    height: 100px;
+    width: 10%;  
+}
+.collage_photos::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+.country-name {
+    text-align: center;
+}
+
+.city-search-form {
+    display: block;
+}
+
+.city-search {
+    align-items: center;
+    float: center;
+    margin-left: auto;
+    margin-right: auto;
+    width: 1000px;
+}
