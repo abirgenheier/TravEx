@@ -1,9 +1,9 @@
 {
     "development": {
-        "username": "root",
-        "password": "gemini253",
-        "database": "countries",
-        "host": "127.0.0.1",
+        "username": "ba6ce7fc604a3e",
+        "password": "28dc8c9d",
+        "database": "heroku_2cf238655b81106",
+        "host": "us-cdbr-east-05.cleardb.net",
         "port": 3306,
         "dialect": "mysql"
     },
