@@ -40,9 +40,8 @@ $(document).on('keypress', function (e) {
         };
         $.post("/api/country", search_input).then(() => { console.log(search_input) })
         $('.earth').addClass('img-hover-zoom')
-        // setTimeout(() => { window.location.href = './input' }, 400)
+        setTimeout(() => { window.location.href = './input' }, 400)
     }
-
 })
 
 $(document).click(e => {

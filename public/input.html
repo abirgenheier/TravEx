@@ -4,31 +4,50 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Document</title>
+        <link rel="stylesheet"
+            href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+            integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
+            crossorigin="anonymous">
         <script src="https://kit.fontawesome.com/a9f3433135.js"
             crossorigin="anonymous"></script>
         <link rel="stylesheet" href="css/input_search.css">
+        <link rel="stylesheet" href="css/input.css">
         <link rel="stylesheet" href="css/input_nav.css">
     </head>
     <body>
-        <div class="collage"></div>
-        <h1 class="country-name"></h1>
-        <form autocomplete="off" action="#" class="city-search-form">
-            <div class="autcomplete">
-                <input type="search"
-                    placeholder="Which city would you like to visit?"
-                    class="city-search" id="city-search" name="myCountry">
+        <!--  -->
+        <div class="card mb-3">
+            <div class="collage card-img-top"></div>
+            <div class="container">
+                <div class="row">
+                    <div class="card-body">
+                        <h5 class="card-title country-name"></h5>
+                        <p class="card-text">
+                            <ul class="country-facts" id="country-facts"></ul>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </form>
-        <div class="list_of_to_do">
-            <ul class="things_to_do"></ul>
-        </div>
+            <!--  -->
+            <!-- <div class="collage"></div> -->
+            <!-- <h1 class="country-name"></h1> -->
+            <form autocomplete="off" action="#" class="city-search-form">
+                <div class="autcomplete">
+                    <input type="search"
+                        placeholder="Which city would you like to visit?"
+                        class="city-search" id="city-search" name="myCountry">
+                </div>
+            </form>
+            <div class="list_of_to_do">
+                <ul class="things_to_do"></ul>
+            </div>
 
-        <button class="refresh"><i class="fa fa-repeat" aria-hidden="true"></i></button>
-        <script src="https://code.jquery.com/jquery-3.5.1.js"
-            integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="crossorigin="anonymous"></script>
-        <!-- <script
+            <button class="refresh"><i class="fa fa-repeat" aria-hidden="true"></i></button>
+            <script src="https://code.jquery.com/jquery-3.5.1.js"
+                integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="crossorigin="anonymous"></script>
+            <!-- <script
             src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
-        <script src="./js/input.js"></script>
-        <script src="./js/input_autocomplete.js"></script>
-    </body>
-</html>
+            <script src="./js/input.js"></script>
+            <script src="./js/input_autocomplete.js"></script>
+        </body>
+    </html>
