@@ -9,5 +9,7 @@ module.exports = function (sequelize, DataTypes) {
         place_four: DataTypes.STRING,
         place_five: DataTypes.STRING
     })
+
     return Trips;
+
 }

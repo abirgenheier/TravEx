@@ -16,16 +16,19 @@ module.exports = app => {
     app.get("/api/all", (req, res) => {
         connection.query("SELECT * FROM countries", (err, data) => {
             res.json(data)
+
         })
     })
     app.get("/api/:country?", (req, res) => {
         connection.query("SELECT * FROM countries WHERE country = ?", [req.params.country], (err, data) => {
             res.json(data)
+
         })
     })
     app.get("/api/code/:country?", (req, res) => {
         connection.query("SELECT * FROM code WHERE name = ?", [req.params.country], (err, data) => {
             res.json(data)
+
         })
     })
 
