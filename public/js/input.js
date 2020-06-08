@@ -12,21 +12,70 @@ $(document).ready(() => {
     console.log(cities)
     $.get("/api/code/" + country, data => {
         console.log(data)
+    }).then(() => {
+        var Picurl = 'https://api.unsplash.com/search/photos?client_id=l_ucLpuaVqeosGc7xD0pKg6Ib61kn737l_M3-nkFmZY&query=' + country;
+        $.ajax({
+            url: Picurl,
+            method: "GET"
+        })
+            .then(function (results) {
+                var returned_array = results.results
+                returned_array.map(images => {
+                    document.querySelector('.collage').innerHTML +=
+                        `<img class="collage_photos" src="${images.urls.full}"></img>`
+                })
+            })
+    }).then(() => {
+        var settings = {
+            "async": true,
+            "crossDomain": true,
+            "url": "https://ajayakv-rest-countries-v1.p.rapidapi.com/rest/v1/all",
+            "method": "GET",
+            "headers": {
+                "x-rapidapi-host": "ajayakv-rest-countries-v1.p.rapidapi.com",
+                "x-rapidapi-key": "9d23a098c0mshffb86547dfcfa5ap17bf84jsn411163bf9f70"
+            }
+        }
+
+        var exchange_rates = []
+
+        fetch(`https://api.exchangerate-api.com/v4/latest/usd`)
+            .then(res => res.json())
+            .then(data => { exchange_rates.push(data.rates) })
+
+
+        $.ajax(settings).done(function (response) {
+
+
+            var result = response.filter(obj => {
+                return obj.name === country
+            })
+            console.log(result)
+            result.map(item => {
+                document.querySelector('.row').innerHTML =
+                    `
+                <div class="col-4">
+                    <li class="origin-spelling list-group-item">${item.nativeName}</li>
+                    <li class="capital list-group-item" id="${item.name}-capital">Capital:  ${item.capital}</li>
+                    <li class ="region list-group-item" id="${item.region}">Region:  ${item.region}</li>
+                </div>
+                <div class="col-4">
+                    <li class="population list-group-item">Population   ${item.population}</li>
+                    <li class="sub-region list-group-item" id="${item.subregion}">Subregion:   ${item.subregion}
+                    <li class="boarding-countries list-group-item">${item.borders == [] || item.borders == null || item.borders == "" || item.borders == undefined ? "This country does not border any countries." : item.name + `  borders ` + item.borders.length + "  countries:  " + item.borders.map(bordering_country => "<p class='inline-block-text'>" +
+                        bordering_country) + "</p>"}</li>
+                </div>
+                <div class="col-4">
+                    <li class="currency list-group-item">${exchange_rates[0][item.currencies] === null || exchange_rates[0][item.currencies] === undefined || item.currencies[0] === null || item.currencies[0] === undefined ? "This countries currency cannot be converted at this time" : (exchange_rates[0][item.currencies]).toFixed(3)}   ${item.currencies[0] + "  /  1 USD"}</li>
+                    <li class="time-zones list-group-item">Timezone(s):   ${item.timezones.length > 1 ? item.timezones[0] + "  -  " + item.timezones[item.timezones.length - 1] : item.timezones[0]}</li>
+                    <li class="gini-index list-group-item">Gini Index:   ${item.gini === null ? "This country does not register on the Gini Index" : item.gini}</li>
+                </div>
+                `
+            })
+        })
     })
-    //Picture API to load banner
-    // var Picurl = 'https://api.unsplash.com/search/photos?client_id=l_ucLpuaVqeosGc7xD0pKg6Ib61kn737l_M3-nkFmZY&query=' + country;
-    // $.ajax({
-    //     url: Picurl,
-    //     method: "GET"
-    // })
-    //     .then(function (results) {
-    //         var returned_array = results.results
-    //         returned_array.map(images => {
-    //             document.querySelector('.collage').innerHTML +=
-    //                 `<img class="collage_photos" src="${images.urls.full}"></img>`
-    //         })
-    //     })
-});
+})
+
 
 //Autocomplete function for cities of country
 function autocomplete(inp, arr) {
@@ -145,142 +194,89 @@ $(document).keypress(e => {
         return this.replace(/\w\S*/g, txt => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase)
     }
     //If typed input === city in database, then triggers event to pull API of things to do in city selected
-    // if (cities.indexOf(search_value.toProperCase()) !== -1) {
-    //     var settings = {
-    //         "async": true,
-    //         "crossDomain": true,
-    //         "url": "https://opentripmap-places-v1.p.rapidapi.com/en/places/geoname?name=" + search_value,
-    //         "method": "GET",
-    //         "headers": {
-    //             "x-rapidapi-host": "opentripmap-places-v1.p.rapidapi.com",
-    //             "x-rapidapi-key": "9d23a098c0mshffb86547dfcfa5ap17bf84jsn411163bf9f70"
-    //         }
-    //     }
+    if (cities.indexOf(search_value.toProperCase()) !== -1) {
+        var settings = {
+            "async": true,
+            "crossDomain": true,
+            "url": "https://opentripmap-places-v1.p.rapidapi.com/en/places/geoname?name=" + search_value,
+            "method": "GET",
+            "headers": {
+                "x-rapidapi-host": "opentripmap-places-v1.p.rapidapi.com",
+                "x-rapidapi-key": "9d23a098c0mshffb86547dfcfa5ap17bf84jsn411163bf9f70"
+            }
+        }
 
-    //     $.ajax(settings).done((response) => {
-    //         console.log(response);
-    //         var settings = {
-    //             "async": true,
-    //             "crossDomain": true,
-    //             "url": "https://opentripmap-places-v1.p.rapidapi.com/en/places/radius?radius=500&lat=" + response.lat + "&lon=" + response.lon,
-    //             "method": "GET",
-    //             "headers": {
-    //                 "x-rapidapi-host": "opentripmap-places-v1.p.rapidapi.com",
-    //                 "x-rapidapi-key": "9d23a098c0mshffb86547dfcfa5ap17bf84jsn411163bf9f70"
-    //             }
-    //         }
+        $.ajax(settings).done((response) => {
+            console.log(response);
+            var settings = {
+                "async": true,
+                "crossDomain": true,
+                "url": "https://opentripmap-places-v1.p.rapidapi.com/en/places/radius?radius=500&lat=" + response.lat + "&lon=" + response.lon,
+                "method": "GET",
+                "headers": {
+                    "x-rapidapi-host": "opentripmap-places-v1.p.rapidapi.com",
+                    "x-rapidapi-key": "9d23a098c0mshffb86547dfcfa5ap17bf84jsn411163bf9f70"
+                }
+            }
 
-    //         $.ajax(settings).done(function (response) {
-    //             console.log(response);
-    //             let i = 0;
-    //             document.querySelector('.things_to_do').innerHTML = ""
-    //             while (i < 10) {
-    //                 console.log(response)
-    //                 document.querySelector('.things_to_do').innerHTML +=
-    //                     `<li class="todo">${response.features[Math.floor(Math.random() * response.features.length)].properties.name}</li>`
-    //                 i++
-    //             }
-    //             static_db.push(response)
-    //         });
-    //     });
-    // };
+            $.ajax(settings).done(function (response) {
+                console.log(response);
+                let i = 0;
+                document.querySelector('.things_to_do').innerHTML = ""
+                while (i < 10) {
+                    console.log(response)
+                    document.querySelector('.things_to_do').innerHTML +=
+                        `<li class="todo">${response.features[Math.floor(Math.random() * response.features.length)].properties.name}</li>`
+                    i++
+                }
+                static_db.push(response)
+            });
+        });
+    };
 })
 //Same function as above but for clicking instead of typing value
 $(document).click(e => {
     let selected_value = e.target.querySelector("input").value
-    //     if (cities.includes(selected_value)) {
-    //         var settings = {
-    //             "async": true,
-    //             "crossDomain": true,
-    //             "url": "https://opentripmap-places-v1.p.rapidapi.com/en/places/geoname?name=" + selected_value,
-    //             "method": "GET",
-    //             "headers": {
-    //                 "x-rapidapi-host": "opentripmap-places-v1.p.rapidapi.com",
-    //                 "x-rapidapi-key": "9d23a098c0mshffb86547dfcfa5ap17bf84jsn411163bf9f70"
-    //             }
-    //         }
+    if (cities.includes(selected_value)) {
+        var settings = {
+            "async": true,
+            "crossDomain": true,
+            "url": "https://opentripmap-places-v1.p.rapidapi.com/en/places/geoname?name=" + selected_value,
+            "method": "GET",
+            "headers": {
+                "x-rapidapi-host": "opentripmap-places-v1.p.rapidapi.com",
+                "x-rapidapi-key": "9d23a098c0mshffb86547dfcfa5ap17bf84jsn411163bf9f70"
+            }
+        }
 
-    //         $.ajax(settings).done((response) => {
-    //             console.log(response);
-    //             var settings = {
-    //                 "async": true,
-    //                 "crossDomain": true,
-    //                 "url": "https://opentripmap-places-v1.p.rapidapi.com/en/places/radius?radius=500&lat=" + response.lat + "&lon=" + response.lon,
-    //                 "method": "GET",
-    //                 "headers": {
-    //                     "x-rapidapi-host": "opentripmap-places-v1.p.rapidapi.com",
-    //                     "x-rapidapi-key": "9d23a098c0mshffb86547dfcfa5ap17bf84jsn411163bf9f70"
-    //                 }
-    //             }
+        $.ajax(settings).done((response) => {
+            console.log(response);
+            var settings = {
+                "async": true,
+                "crossDomain": true,
+                "url": "https://opentripmap-places-v1.p.rapidapi.com/en/places/radius?radius=500&lat=" + response.lat + "&lon=" + response.lon,
+                "method": "GET",
+                "headers": {
+                    "x-rapidapi-host": "opentripmap-places-v1.p.rapidapi.com",
+                    "x-rapidapi-key": "9d23a098c0mshffb86547dfcfa5ap17bf84jsn411163bf9f70"
+                }
+            }
 
-    //             $.ajax(settings).done(function (response) {
-    //                 console.log(response);
-    //                 let i = 0;
-    //                 document.querySelector('.things_to_do').innerHTML = ""
-    //                 while (i < 10) {
-    //                     // console.log(response)
-    //                     document.querySelector('.things_to_do').innerHTML +=
-    //                         `<li class="todo">${response.features[Math.floor(Math.random() * response.features.length)].properties.name}</li>`
-    //                     i++
-    //                 }
-    //                 static_db.push(response)
-    //             });
-    //         })
-    //     }
-    // })
-
-
-})
-
-
-var settings = {
-    "async": true,
-    "crossDomain": true,
-    "url": "https://ajayakv-rest-countries-v1.p.rapidapi.com/rest/v1/all",
-    "method": "GET",
-    "headers": {
-        "x-rapidapi-host": "ajayakv-rest-countries-v1.p.rapidapi.com",
-        "x-rapidapi-key": "9d23a098c0mshffb86547dfcfa5ap17bf84jsn411163bf9f70"
+            $.ajax(settings).done(function (response) {
+                console.log(response);
+                let i = 0;
+                document.querySelector('.things_to_do').innerHTML = ""
+                while (i < 10) {
+                    // console.log(response)
+                    document.querySelector('.things_to_do').innerHTML +=
+                        `<li class="todo">${response.features[Math.floor(Math.random() * response.features.length)].properties.name}</li>`
+                    i++
+                }
+                static_db.push(response)
+            });
+        })
     }
-}
-
-var exchange_rates = []
-
-fetch(`https://api.exchangerate-api.com/v4/latest/usd`)
-    .then(res => res.json())
-    .then(data => { exchange_rates.push(data.rates) })
-
-
-$.ajax(settings).done(function (response) {
-
-
-    var result = response.filter(obj => {
-        return obj.name === country
-    })
-    console.log(result)
-    result.map(item => {
-        document.querySelector('.row').innerHTML =
-            `
-        <div class="col-4">
-            <li class="origin-spelling">${item.nativeName}</li>
-            <li class="capital" id="${item.name}-capital">Capital:  ${item.capital}</li>
-            <li class ="region" id="${item.region}">Region:  ${item.region}</li>
-        </div>
-        <div class="col-4">
-            <li class="population">Population   ${item.population}</li>
-            <li class="sub-region" id="${item.subregion}">Subregion:   ${item.subregion}
-            <li class="boarding-countries">${item.borders == [] || item.borders == null || item.borders == "" || item.borders == undefined ? "This country does not border any countries." : item.name + `  borders ` + item.borders.length + "  countries:  " + item.borders.map(bordering_country => "<li class='inline-block-text'>" +
-                bordering_country) + "</li>"}</li>
-        </div>
-        <div class="col-4">
-            <li class="currency">${(exchange_rates[0][item.currencies]).toFixed(3)}   ${item.currencies[0]} / 1 USD </li>
-            <li class="time-zones">Timezone(s):   ${item.timezones.length > 1 ? item.timezones[0] + "  -  " + item.timezones[item.timezones.length - 1] : item.timezones[0]}</li>
-            <li class="gini-index">Gini Index:   ${item.gini}</li>
-        </div>
-        `
-    })
 })
 
 
 
-// })
