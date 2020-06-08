@@ -265,12 +265,23 @@ $(document).click(e => {
             $.ajax(settings).done(function (response) {
                 console.log(response);
                 let i = 0;
-                document.querySelector('.things_to_do').innerHTML = ""
-                while (i < 10) {
-                    // console.log(response)
-                    document.querySelector('.things_to_do').innerHTML +=
-                        `<li class="todo">${response.features[Math.floor(Math.random() * response.features.length)].properties.name}</li>`
-                    i++
+                if (response.features.length <= 3) {
+                    document.querySelector('.things_to_do').innerHTML = ""
+                    while (i < response.features.length - 1) {
+                        document.querySelector('.things_to_do').innerHTML +=
+                            `<li class="todo">${response.features[i].properties.name}</li>`
+                        i++
+                    }
+                } else if (response.features.length > 4) {
+                    document.querySelector('.things_to_do').innerHTML = ""
+                    while (i < response.features.length - 1) {
+                        // console.log(response)
+                        document.querySelector('.things_to_do').innerHTML +=
+                            `<li class="todo">${response.features[i].properties.name}</li>`
+                        i++
+                    }
+                } else {
+                    document.querySelector('.things_to_do').innerHTML = "I'm sorry. We currently do not service this location at this time. Please search for another city."
                 }
                 static_db.push(response)
             });
