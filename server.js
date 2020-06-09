@@ -1,18 +1,18 @@
-const express = require('express')
-const app = express()
-let PORT = process.env.PORT || 8080;
 require('dotenv').config()
+var express = require('express')
+var app = express()
+var PORT = process.env.PORT || 8080;
 
-const db = require('./app/models')
+var db = require('./app/models')
 
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 
-app.use(express.static("public"))
+app.use(express.static("./app/public"))
 
-require("./routes/static-api-routes")(app)
-require("./routes/dynamic-api-routes")(app)
-require("./routes/html-routes")(app)
+require("./app/routes/static-api-routes")(app)
+require("./app/routes/dynamic-api-routes")(app)
+require("./app/routes/html-routes")(app)
 
 db.sequelize.sync({ force: false }).then(() => {
     app.listen(PORT, () => {

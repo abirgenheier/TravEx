@@ -1,7 +1,7 @@
-const db = require("../models")
+var db = require("../models")
 
-const mysql = require('mysql');
-const connection = mysql.createConnection(
+var mysql = require('mysql');
+var connection = mysql.createConnection(
     {
         host: 'localhost',
         port: 3306,
