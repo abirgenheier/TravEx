@@ -1,10 +1,22 @@
 {
     "development": {
-        "username": "sq6ntp8pt59si3ac",
-        "password": "jfbzxdlvoesdafkm",
-        "database": "tibonkbw0iv11w1x",
-        "host": "sq65ur5a5bj7flas.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
+        "username": "root",
+        "password": "gemini253",
+        "database": "country",
+        "host": "127.0.0.1",
         "port": 3306,
+        "dialect": "mysql"
+    },
+    "test": {
+        "username": "root",
+        "password": "gemini253",
+        "database": "country",
+        "host": "127.0.0.1",
+        "port": 3306,
+        "dialect": "mysql"
+    },
+    "production": {
+        "use_env_variable": "JAWSDB_URL",
         "dialect": "mysql"
     }
 }

@@ -2,6 +2,21 @@ let static_db = []
 var country = sessionStorage.getItem('Country')
 // let cities = []
 let picture_array = []
+let city = []
+
+var Picurl = 'https://api.unsplash.com/search/photos?client_id=l_ucLpuaVqeosGc7xD0pKg6Ib61kn737l_M3-nkFmZY&query=' + country;
+$.ajax({
+    url: Picurl,
+    method: "GET"
+})
+    .then(function (results) {
+        var returned_array = results.results
+        picture_array.push(returned_array)
+        returned_array.map(images => {
+            document.querySelector('.collage').innerHTML +=
+                `<img class="collage_photos" src="${images.urls.full}"></img>`
+        })
+    })
 
 $(document).ready(() => {
     //Load country selected & cities from database
@@ -48,11 +63,11 @@ $(document).ready(() => {
 
         $.ajax(settings).done(function (response) {
 
-
+            // console.log(response)
             var result = response.filter(obj => {
                 return obj.name === country
             })
-            console.log(result)
+            // console.log(result)
             result.map(item => {
                 document.querySelector('.row').innerHTML =
                     `
@@ -240,18 +255,19 @@ $(document).keypress(e => {
 $(document).click(e => {
     let selected_value = e.target.querySelector("input").value;
     // 
-    var Picurl = 'https://api.unsplash.com/search/photos?client_id=l_ucLpuaVqeosGc7xD0pKg6Ib61kn737l_M3-nkFmZY&query=' + country;
+    // var Picurl = 'https://api.unsplash.com/search/photos?client_id=l_ucLpuaVqeosGc7xD0pKg6Ib61kn737l_M3-nkFmZY&query=' + country;
     // 
     if (cities.includes(selected_value)) {
+        city.push(selected_value)
         // 
-        $.ajax({
-            url: Picurl,
-            method: "GET"
-        })
-            .then(function (results) {
-                var returned_array = results.results
-                picture_array.push(returned_array)
-            })
+        // $.ajax({
+        //     url: Picurl,
+        //     method: "GET"
+        // })
+        //     .then(function (results) {
+        //         var returned_array = results.results
+        //         picture_array.push(returned_array)
+        //     })
         // 
         var settings = {
             "async": true,
@@ -277,16 +293,25 @@ $(document).click(e => {
             }
             $.ajax(settings).done(function (response) {
                 let i = 0;
-                if (response.features.length <= 3) {
+
+                console.log(response)
+                let new_response = response.features
+                console.log(new_response)
+                var filtered_response = new_response.filter(obj => {
+                    return obj.properties.name !== ''
+                })
+                // console.log(result)
+
+                if (filtered_response.length <= 3) {
                     console.log(picture_array[0])
                     document.querySelector('.things_to_do').innerHTML = ""
-                    while (i < response.features.length - 1) {
+                    while (i < filtered_response.length - 1) {
                         document.querySelector('.things_to_do').innerHTML +=
                             `<div class="card">
                                 <div class="card-image">
                                     <img src="${picture_array[i]}">
-                                    <span class="card-title">${response.features[i].properties.name}</span>
-                                    <a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">add</i></a>
+                                    <span class="card-title">${filtered_response[i].properties.name}</span>
+                                    <a class="btn-floating halfway-fab waves-effect waves-light red" onClick="myFunction()"><i class="material-icons" id="${(filtered_response[i].properties.name).replace(/\s+/g, '-').toLowerCase()}" >add</i></a>
                                 </div>
                                 <div class="card-content">
                                     <p>I am a very simple card. I am good at containing small bits of information. I am convenient because I require little markup to use effectively.</p>
@@ -294,23 +319,23 @@ $(document).click(e => {
                             </div>`
                         i++
                     }
-                } else if (response.features.length > 4) {
+                } else if (filtered_response.length > 4) {
                     document.querySelector('.things_to_do').innerHTML = ""
-                    console.log(response.features[0].properties)
-                    console.log(picture_array[0].urls.full)
-                    //Cut limit of initial load at 10
-                    while (i < 10) {
+
+                    while (i < filtered_response.length) {
                         document.querySelector('.things_to_do').innerHTML +=
                             `<div class="card">
                                 <div class="card-image">
-                                    <img src="${picture_array[i].urls.full}">
-                                    <span class="card-title">${response.features[i].properties.name}</span>
-                                    <a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">add</i></a>
-                                </div>
-                                <div class="card-content">
-                                    <p>I am a very simple card. I am good at containing small bits of information. I am convenient because I require little markup to use effectively.</p>
-                                </div>
-                            </div>`
+                                    <img src="${picture_array[0][i].urls.full}">
+                                    <span class="card-title">${filtered_response[i].properties.name
+                            }</span >
+                        <a class="btn-floating halfway-fab waves-effect waves-light red"   onClick="myFunction()"
+                        ><i class="material-icons" id="${(filtered_response[i].properties.name).replace(/\s+/g, '-').toLowerCase()}">add</i></a>
+                                </div >
+                        <div class="card-content">
+                            <p>I am a very simple card. I am good at containing small bits of information. I am convenient because I require little markup to use effectively.</p>
+                        </div>
+                            </div > `
                         i++
                     }
                 } else {
@@ -325,5 +350,11 @@ $(document).click(e => {
 
 
 
-
-
+function myFunction() {
+    let tripData = {
+        country: country.replace(/\s+/g, '-').toLowerCase(),
+        city: city[0].replace(/\s+/g, '-').toLowerCase(),
+        place_one: event.target.id
+    }
+    $.post("/api/trips", tripData)
+}
