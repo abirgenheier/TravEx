@@ -1,14 +1,20 @@
 var db = require("../models")
-
+var connection;
 var mysql = require('mysql');
-var connection = mysql.createConnection(
-    {
-        host: 'localhost',
-        port: 3306,
-        user: 'root',
-        password: 'gemini253',
-        database: 'countries'
-    })
+if (process.env.JAWSDB_URL) {
+    connection = mysql.createConnection(process.env.JAWSDB_URL)
+} else {
+    connection = mysql.createConnection(
+        {
+            host: 'localhost',
+            port: 3306,
+            user: 'root',
+            password: 'gemini253',
+            database: 'countries'
+        })
+
+}
+
 connection.connect(err => {
     if (err) throw err;
 });

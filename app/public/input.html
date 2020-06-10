@@ -17,6 +17,7 @@
         <link rel="stylesheet" href="css/input_search.css">
         <link rel="stylesheet" href="css/input.css">
         <link rel="stylesheet" href="css/input_nav.css">
+        <link rel="stylesheet" href="css/input_nav.css">
     </head>
     <body>
         <!--  -->
@@ -45,20 +46,27 @@
                 <div class="list_of_to_do">
                     <div class="flex items-center justify-center min-h-screen">
                         <div class="max-w-md md:max-w-2xl px-2">
-                            <ul class="things_to_do">
+                            <div class="row rows-input" id="row1">
                             </div>
+                            <div class="row rows-input" id="row2">
+                            </div>
+                            <div class="row rows-input" id="row3">
+                            </div>
+                            <div class="row rows-input" id="row4">
+                            </div>
+
+                            <button class="refresh"><i class="fa fa-repeat"
+                                    aria-hidden="true"></i></button>
                         </div>
-                    </ul>
-                    <button class="refresh"><i class="fa fa-repeat"
-                            aria-hidden="true"></i></button>
+                    </div>
                 </div>
             </div>
-
-            <script src="https://code.jquery.com/jquery-3.5.1.js"
-                integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="crossorigin="anonymous"></script>
-            <!-- <script
+        </div>
+        <script src="https://code.jquery.com/jquery-3.5.1.js"
+            integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="crossorigin="anonymous"></script>
+        <!-- <script
             src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
-            <script src="./js/input.js"></script>
-            <script src="./js/input_autocomplete.js"></script>
-        </body>
-    </html>
+        <script src="./js/input.js"></script>
+        <script src="./js/input_autocomplete.js"></script>
+    </body>
+</html>
