@@ -233,7 +233,7 @@ $(document).click(e => {
                             row[m].innerHTML +=
                                 `<div class="col-3">
                                     <div
-                                        <div class="card">
+                                        <div class="card card-item">
                                             <div class="card-image">
                                                 <img src="${picture_array[0][(m * n)].urls.full}">
                                                 <span class="card-title">${filtered_response[(m * n)].properties.name}</span >
@@ -272,6 +272,15 @@ function myFunction() {
 }
 
 function next_page(page_identifier) {
+    const loading = document.querySelector('.loader');
+    loading.classList.add('show');
+    setTimeout(() => {
+        loading.classList.remove('show');
+
+        setTimeout(() => {
+            showPosts();
+        }, 300);
+    }, 1000);
     let row = document.querySelectorAll(".rows-input");
     for (let m = 1; m < 4; m++) {
         for (let n = 1; n < 5; n++) {
@@ -279,7 +288,7 @@ function next_page(page_identifier) {
             row[m].innerHTML +=
                 `<div class="col-3">
                     <div
-                        <div class="card">
+                        <div class="card card-item">
                             <div class="card-image">
                                 <img src="${picture_array[0][(m * n)].urls.full}">
                                 <span class="card-title">${meta_data[0][(m * n) + page_identifier].properties.name}</span >
@@ -297,13 +306,12 @@ function next_page(page_identifier) {
 }
 
 window.addEventListener('scroll', () => {
-    console.log(picture_array)
+    // console.log(picture_array)
     const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
     let p = 0;
     if (scrollTop + clientHeight >= scrollHeight - 5) {
         p += 12
         next_page(p)
-
     }
 });
 
