@@ -1,9 +1,9 @@
 let static_db = []
 var country = sessionStorage.getItem('Country')
-// let cities = []
 let picture_array = []
 let city = []
 let meta_data = []
+let row = document.querySelectorAll(".rows-input");
 
 var Picurl = 'https://api.unsplash.com/search/photos?client_id=l_ucLpuaVqeosGc7xD0pKg6Ib61kn737l_M3-nkFmZY&query=' + country;
 $.ajax({
@@ -21,20 +21,6 @@ $(document).ready(() => {
 
     $.get("/api/code/" + country, data => {
         // console.log(data)
-    }).then(() => {
-        // var Picurl = 'https://api.unsplash.com/search/photos?client_id=l_ucLpuaVqeosGc7xD0pKg6Ib61kn737l_M3-nkFmZY&query=' + country;
-        // $.ajax({
-        //     url: Picurl,
-        //     method: "GET"
-        // })
-        //     .then(function (results) {
-        //         var returned_array = results.results
-        //         picture_array.push(returned_array)
-        //         returned_array.map(images => {
-        //             document.querySelector('.collage').innerHTML +=
-        //                 `<img class="collage_photos" src="${images.urls.full}"></img>`
-        //         })
-        //     })
     }).then(() => {
         var settings = {
             "async": true,
@@ -84,19 +70,6 @@ $(document).ready(() => {
             })
         })
     })
-})
-
-
-//Loads new 'todos' on click from local array stored from API to prevent multiple calls
-$('.refresh').click(() => {
-    let i = 0
-    console.log(static_db)
-    document.querySelector('.things_to_do').innerHTML = ""
-    while (i < 10) {
-        document.querySelector('.things_to_do').innerHTML +=
-            `<li class="todo">${static_db[0].features[Math.floor(Math.random() * static_db[0].features.length)].properties.name}</li>`
-        i++
-    }
 })
 //Event listener for typing of city
 $(document).keypress(e => {
@@ -150,31 +123,6 @@ $(document).click(e => {
     let selected_value = e.target.querySelector("input").value;
     if (cities.includes(selected_value)) {
         city.push(selected_value)
-        //Wikidata retrieve
-        let j = 0;
-        let destination_name = []
-        let destination_description = []
-        // while (j < destination_name.length) {
-        //     $.ajax({
-        //         url: "https://en.wikipedia.org/w/api.php",
-        //         data: {
-        //             format: "json",
-        //             action: "parse",
-        //             page: destination_name[j],
-        //             prop: "text",
-        //             section: 0,
-        //         },
-        //         dataType: 'jsonp',
-        //         headers: {
-        //             'Api-User-Agent': 'MyCoolTool/1.1 (http://example.com/MyCoolTool/; MyCoolTool@example.com) BasedOnSuperLib/1.4'
-        //         }.then(response => {
-        //             destination_description.push(response)
-        //             console.log(response)
-        //         })
-        //     })
-        //     j++
-        // }
-
         var settings = {
             "async": true,
             "crossDomain": true,
@@ -198,60 +146,39 @@ $(document).click(e => {
                 }
             }
             $.ajax(settings).done(function (response) {
-                let i = 1;
-                let j = 1;
+                let i = 0;
                 let new_response = response.features
-                console.log(new_response)
                 meta_data.push(new_response)
-                console.log(meta_data)
                 var filtered_response = new_response.filter(obj => {
                     return obj.properties.name !== ''
                 })
-                if (filtered_response.length <= 3) {
-                    document.querySelector('.things_to_do').innerHTML = ""
+                if (filtered_response.length > 2) {
+                    document.querySelector('.container-grid').innerHTML = "";
                     while (i < filtered_response.length - 1) {
-                        destination_name.push(filtered_response[i].properties.name)
-                        // console.log(destination_description)
-                        document.querySelector('.things_to_do').innerHTML +=
-                            `<div class="card">
-                                <div class="card-image">
-                                    <img src="${picture_array[i]}">
-                                    <span class="card-title">${filtered_response[i].properties.name}</span>
-                                    <a class="btn-floating halfway-fab waves-effect waves-light red" onClick="myFunction()"><i class="material-icons" id="${(filtered_response[i].properties.name).replace(/\s+/g, '-').toLowerCase()}" >add</i></a>
+                        document.querySelector('.container-grid').innerHTML +=
+                            `<div class="box">
+                                <div class="post-module">
+                                <div class="thumbnail">
+                                    <div class="date">
+                                        <div class="day">27</div>
+                                        <div class="month">Mar</div>
+                                    </div><img src="${picture_array[0][(i)].urls.full}" />
                                 </div>
-                                <div class="card-content">
-                                    <p>I am a very simple card. I am good at containing small bits of information. I am convenient because I require little markup to use effectively.</p>
+                                <div class="post-content">
+                                    <div class="category" id="${(filtered_response[(i)].properties.name).replace(/\s+/g, '-').toLowerCase()}" onclick="myFunction()">Add</div>
+                                    <h1 class="title">${filtered_response[(i)].properties.name}</h1>
+                                    <h2 class="sub_title">${city},  ${country}</h2>
+                                    <p class="description">New York, the largest city in the U.S., is an architectural marvel with plenty of historic monuments, magnificent buildings and countless dazzling skyscrapers.</p>
+                                    <div class="post-meta"><span class="timestamp"><i class="fa fa-clock-">o</i> 6 mins ago</span><span class="comments"><i class="fa fa-comments"></i><a href="#"> 39 comments</a></span></div>
+                                </div>
                                 </div>
                             </div>`
                         i++
                     }
-                } else if (filtered_response.length > 4) {
-                    let row = document.querySelectorAll(".rows-input");
-                    for (let m = 1; m < 4; m++) {
-                        for (let n = 1; n < 5; n++) {
-                            console.log(row[m])
-                            row[m].innerHTML +=
-                                `<div class="col-3">
-                                    <div
-                                        <div class="card card-item">
-                                            <div class="card-image">
-                                                <img src="${picture_array[0][(m * n)].urls.full}">
-                                                <span class="card-title">${filtered_response[(m * n)].properties.name}</span >
-                                                <a class="btn-floating halfway-fab waves-effect waves-light red"   onClick="myFunction()"
-                                                ><i class="material-icons" id="${(filtered_response[i].properties.name).replace(/\s+/g, '-').toLowerCase()}">add</i></a>
-                                            </div >
-                                            <div class="card-content">
-                                                <p>I am a very simple card. I am good at containing small bits of information. I am convenient because I require little markup to use effectively.</p>
-                                            </div>
-                                        </div > 
-                                    </div>
-                                `
-                        }
-                    }
-                }
 
+                }
                 else {
-                    document.querySelector('.things_to_do').innerHTML = "I'm sorry. We currently do not service this location at this time. Please search for another city."
+                    document.querySelector('.container-grid').innerHTML = "I'm sorry. We currently do not service this location at this time. Please search for another city."
                 }
                 static_db.push(response)
             });
@@ -259,16 +186,15 @@ $(document).click(e => {
     }
 })
 
-
-
-
 function myFunction() {
     let tripData = {
+        user: sessionStorage.getItem('User').replace(/\s+/g, '-').toLowerCase(),
         country: country.replace(/\s+/g, '-').toLowerCase(),
         city: city[0].replace(/\s+/g, '-').toLowerCase(),
         place_one: event.target.id
     }
     $.post("/api/trips", tripData)
+
 }
 
 function next_page(page_identifier) {
@@ -277,34 +203,29 @@ function next_page(page_identifier) {
     setTimeout(() => {
         loading.classList.remove('show');
 
-        setTimeout(() => {
-            showPosts();
-        }, 300);
+        // setTimeout(() => {
+        // }, 300);
     }, 1000);
-    let row = document.querySelectorAll(".rows-input");
-    for (let m = 1; m < 4; m++) {
-        for (let n = 1; n < 5; n++) {
-            console.log(row[m])
-            row[m].innerHTML +=
-                `<div class="col-3">
-                    <div
-                        <div class="card card-item">
-                            <div class="card-image">
-                                <img src="${picture_array[0][(m * n)].urls.full}">
-                                <span class="card-title">${meta_data[0][(m * n) + page_identifier].properties.name}</span >
-                                <a class="btn-floating halfway-fab waves-effect waves-light red"   onClick="myFunction()"
-                                ><i class="material-icons" id="${(meta_data[0][(m * n) + page_identifier].properties.name).replace(/\s+/g, '-').toLowerCase()} ">add</i></a>
-                            </div >
-                            <div class="card-content">
-                                <p>I am a very simple card. I am good at containing small bits of information. I am convenient because I require little markup to use effectively.</p>
-                            </div>
-                        </div > 
-                    </div >
-            `
-        }
-    }
-}
+    document.querySelector('.container-grid').innerHTML +=
+        `<div class="box">
+            <div class="post-module">
+            <div class="thumbnail">
+                <div class="date">
+                    <div class="day">27</div>
+                    <div class="month">Mar</div>
+                </div><img src="${picture_array[0][(i)].urls.full}" />
+            </div>
+            <div class="post-content">
+                <div class="category" id="${(meta_data[0][(i) + page_identifier].properties.name).replace(/\s+/g, '-').toLowerCase()}">Add</div>
+                <h1 class="title">${meta_data[0][(i) + page_identifier].properties.name}</h1>
+                <h2 class="sub_title">${city},  ${country}</h2>
+                <p class="description">New York, the largest city in the U.S., is an architectural marvel with plenty of historic monuments, magnificent buildings and countless dazzling skyscrapers.</p>
+                <div class="post-meta"><span class="timestamp"><i class="fa fa-clock-">o</i> 6 mins ago</span><span class="comments"><i class="fa fa-comments"></i><a href="#"> 39 comments</a></span></div>
+            </div>
+            </div>
+        </div>`
 
+}
 window.addEventListener('scroll', () => {
     // console.log(picture_array)
     const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
@@ -315,3 +236,27 @@ window.addEventListener('scroll', () => {
     }
 });
 
+// 
+$(window).on('load', () => {
+    $('.post-module').hover(function () {
+        $(this).find('.description').stop().animate({
+            height: "toggle",
+            opacity: "toggle"
+        }, 300);
+    });
+});
+$(document).ready(() => {
+    $.get('/api/all-info/' + sessionStorage.getItem('User').replace(/\s+/g, '-').toLowerCase(), data => {
+        console.table(data)
+        $('.number').text(data.length)
+    })
+})
+
+$('.basket').mouseover(() => {
+    $('.basket').addClass('hover-class')
+    $('.number').addClass('hover-class')
+})
+$('.basket').mouseout(() => {
+    $('.basket').removeClass('hover-class')
+    $('.number').removeClass('hover-class')
+})

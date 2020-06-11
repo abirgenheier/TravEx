@@ -10,14 +10,8 @@
             crossorigin="anonymous">
         <script src="https://kit.fontawesome.com/a9f3433135.js"
             crossorigin="anonymous"></script>
-        <link rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.css"
-            integrity="sha256-13EKEXRsynh3cmmNF1dlW6uvoC1SZVaW94bIHZQJoMU="crossorigin="anonymous"
-            />
-        <link rel="stylesheet" href="css/input_search.css">
-        <link rel="stylesheet" href="css/input.css">
-        <link rel="stylesheet" href="css/input_nav.css">
-        <link rel="stylesheet" href="css/input_nav.css">
+        <link rel="stylesheet" href="css/input/input_search.css">
+        <link rel="stylesheet" href="css/input/input.css">
     </head>
     <body>
         <!--  -->
@@ -40,24 +34,11 @@
                         <input type="search"
                             placeholder="Which city would you like to visit?"
                             class="city-search" id="city-search"
-                            name="myCountry">
+                            name="myCountry" style="width: 100%">
                     </div>
                 </form>
                 <div class="list_of_to_do">
-                    <div class="flex items-center justify-center min-h-screen">
-                        <div class="max-w-md md:max-w-2xl px-2">
-                            <div class="row rows-input" id="row1">
-                            </div>
-                            <div class="row rows-input" id="row2">
-                            </div>
-                            <div class="row rows-input" id="row3">
-                            </div>
-                            <div class="row rows-input" id="row4">
-                            </div>
-
-                            <button class="refresh"><i class="fa fa-repeat"
-                                    aria-hidden="true"></i></button>
-                        </div>
+                    <div class="container container-grid">
                     </div>
                 </div>
                 <div class="loader">
@@ -67,10 +48,12 @@
                 </div>
             </div>
         </div>
+        <a class="basket" id="basket" href='/trips'><i class="fa
+                fa-shopping-cart fa-2x"
+                aria-hidden="true"></i></a>
+        <div class="number" id="number"></div>
         <script src="https://code.jquery.com/jquery-3.5.1.js"
             integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="crossorigin="anonymous"></script>
-        <!-- <script
-            src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
         <script src="./js/input.js"></script>
         <script src="./js/input_autocomplete.js"></script>
     </body>

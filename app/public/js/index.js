@@ -79,3 +79,43 @@ $(".logo").mouseout(() => {
     // $('.express-logo').hide()
 })
 
+$.get('/google-data', data => {
+    console.log('google' + data)
+    if (data) {
+        sessionStorage.setItem('User', data.givenName)
+        $('.profile-header').addClass('reveal')
+        $('.profile-header').attr('src', data.photos[0].value);
+        $('.login').replaceWith(` <li><a href="#footer">${data.name.givenName}'s Trips</a></li>`)
+    }
+})
+$.get('/github-data', data => {
+    console.log('github' + data)
+    if (data) {
+        sessionStorage.setItem('User', data.displayName)
+        console.log(data)
+        $('.profile-header').addClass('reveal')
+        $('.profile-header').attr('src', data.photos[0].value);
+        $('.login').replaceWith(` <li><a href="/trips">${data.displayName}'s Trips</a></li>`)
+    }
+})
+// $.get('/facebook-data', data => {
+//     console.log('facebook' + data)
+//     if (data) {
+//         sessionStorage.set('User', data.displayName)
+//         console.log(data)
+//         $('.profile-header').addClass('reveal')
+//         $('.profile-header').attr('src', data.photos[0].value);
+//         $('.login').replaceWith(` <li><a href="#footer">${data.displayName}'s Trips</a></li>`)
+//     }
+// })
+
+$('.profile-header').click(() => {
+    $('.logout-button').toggle('reveal')
+})
+
+
+
+
+
+
+

@@ -6,12 +6,13 @@
         <script src="https://kit.fontawesome.com/a9f3433135.js"
             crossorigin="anonymous"></script>
 
-        <link rel="stylesheet" href="./css/nav.css">
-        <link rel="stylesheet" href="./css/search.css">
-        <link rel="stylesheet" href="./css/earth.css">
-        <link rel="stylesheet" href="./css/contact.css">
-        <link rel="stylesheet" href="./css/footer.css">
-        <link rel="stylesheet" href="./css/style.css">
+        <link rel="stylesheet" href="./css/index/nav.css">
+        <link rel="stylesheet" href="./css/index/search.css">
+        <link rel="stylesheet" href="./css/index/earth.css">
+        <link rel="stylesheet" href="./css/index/contact.css">
+        <link rel="stylesheet" href="./css/index/footer.css">
+        <link rel="stylesheet" href="./css/index/style.css">
+        <link rel="stylesheet" href="./css/ndex/trips.css">
         <link rel="stylesheet"
             href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
             integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
@@ -21,15 +22,19 @@
         <nav class="nav">
             <div class="container">
                 <div class="logo">
-                    <a href="#"><i class="far fa-paper-plane airplane"></i>TravEx</a><a
+                    <a href="/"><i class="far fa-paper-plane airplane"></i>TravEx</a><a
                         class="express-logo hide" style="display: none">press</a>
                 </div>
                 <div id="mainListDiv" class="main_list">
                     <ul class="navlinks">
                         <li><a href="#">About</a></li>
                         <li><a href="#earth">Planner</a></li>
-                        <li><a href="#">Testimonies</a></li>
+                        <li><a href="#carouselExampleInterval">Testimonies</a></li>
                         <li><a href="#footer">Contact</a></li>
+                        <li><a class="login" href="/login">Login</a></li>
+                        <div><img class="profile-header"></img><ul class="drop-down">
+                            <a href="/logout" class="logout" id="logout"><button class="logout-button">Logout  <i class="fa fa-sign-out" aria-hidden="true"></i></button></a>
+                        </ul></div>
                     </ul>
                 </div>
                 <span class="navTrigger">
@@ -42,8 +47,7 @@
 
     </head>
     <body>
-        <!-- MIDDLE -->
-
+        <!-- Search -->
         <section class="home">
         </section>
         <form class="search" autocomplete="off">
@@ -69,7 +73,7 @@
                 </div>
                 <div class="carousel-item" data-interval="2000">
                     <img
-                        src="Assets/couple-taking-selfie-while-eating-4046771.jpg"
+                        src="Assets/woman-on-rock-platform-viewing-city-196667.jpg"
                         class="d-block w-100" alt="..." style="height: 800px">
                 </div>
                 <div class="carousel-item">
@@ -180,7 +184,11 @@
         </div>
 
 
-
+        <script href="js/login.js"></script>
+        <script
+        src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
+    <script
+        src='https://cdn.jsdelivr.net/jquery.leanmodal/1.1/jquery.leanmodal.min.js'></script>
         <script src="https://code.jquery.com/jquery-3.5.1.js"
             integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="crossorigin="anonymous"></script>
         <script

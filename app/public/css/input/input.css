@@ -1,0 +1,54 @@
+* {
+    box-sizing: border-box;
+  }
+
+.inline-block-text {
+    width: 80%;
+    display: inline;
+}
+
+.loader {
+    opacity: 0;
+    display: flex;
+    position: fixed;
+    bottom: 50px;
+    align-items: center;
+    float: center;
+    transition: opacity 0.3s ease-in;
+    margin-left: 500px;
+    z-index: 100;
+  }
+  
+  .loader.show {
+    opacity: 1;
+    z-index: 100;
+  }
+  
+  .circle {
+    background-color: rgb(255, 0, 0);
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    margin: 5px;
+    animation: bounce 0.5s ease-in infinite;
+  }
+  
+  .circle:nth-of-type(2) {
+    animation-delay: 0.1s;
+  }
+  
+  .circle:nth-of-type(3) {
+    animation-delay: 0.2s;
+  }
+  
+  @keyframes bounce {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+  
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+  

@@ -1,8 +1,33 @@
 module.exports = function (sequelize, DataTypes) {
     var Trips = sequelize.define("Trips", {
-        country: DataTypes.STRING,
-        city: DataTypes.STRING,
-        place_one: DataTypes.STRING,
+        user: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            validate: {
+                len: [1]
+            }
+        },
+        country: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            validate: {
+                len: [1]
+            }
+        },
+        city: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            validate: {
+                len: [1]
+            }
+        },
+        place_one: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            validate: {
+                len: [1]
+            }
+        },
     })
 
     return Trips;
