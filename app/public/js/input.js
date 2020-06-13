@@ -187,13 +187,17 @@ $(document).click(e => {
 })
 
 function myFunction() {
-    let tripData = {
-        user: sessionStorage.getItem('User').replace(/\s+/g, '-').toLowerCase(),
-        country: country.replace(/\s+/g, '-').toLowerCase(),
-        city: city[0].replace(/\s+/g, '-').toLowerCase(),
-        place_one: event.target.id
+    if (sessionStorage.getItem('User') == null || sessionStorage.getItem('User') == undefined || sessionStorage.getItem('User') == '') {
+        let tripData = {
+            user: sessionStorage.getItem('User').replace(/\s+/g, '-').toLowerCase(),
+            country: country.replace(/\s+/g, '-').toLowerCase(),
+            city: city[0].replace(/\s+/g, '-').toLowerCase(),
+            place_one: event.target.id
+        }
+        $.post("/api/trips", tripData)
+    } else {
+        alert('Error! Please login to continue')
     }
-    $.post("/api/trips", tripData)
 
 }
 
