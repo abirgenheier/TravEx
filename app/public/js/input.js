@@ -5,7 +5,7 @@ let city = []
 let meta_data = []
 let row = document.querySelectorAll(".rows-input");
 
-var Picurl = 'https://api.unsplash.com/search/photos?client_id=l_ucLpuaVqeosGc7xD0pKg6Ib61kn737l_M3-nkFmZY&query=' + country;
+var Picurl = 'https://api.unsplash.com/search/photos?client_id=l_ucLpuaVqeosGc7xD0pKg6Ib61kn737l_M3-nkFmZY&query=' + country.replace(/\s+/g, '-').toLowerCase();
 $.ajax({
     url: Picurl,
     method: "GET"
@@ -17,7 +17,7 @@ $.ajax({
 
 $(document).ready(() => {
     //Load country selected & cities from database
-    $('.country-name').text(country)
+    $('.country-heading').text(country)
 
     $.get("/api/code/" + country, data => {
         // console.log(data)
@@ -42,7 +42,7 @@ $(document).ready(() => {
 
         $.ajax(settings).done(function (response) {
 
-            // console.log(response)
+            console.log(response)
             var result = response.filter(obj => {
                 return obj.name === country
             })
@@ -71,7 +71,7 @@ $(document).ready(() => {
         })
     })
 })
-//Event listener for typing of city
+// Event listener for typing of city
 $(document).keypress(e => {
     let search_value = e.target.value
     String.prototype.toProperCase = () => {
@@ -146,13 +146,16 @@ $(document).click(e => {
                 }
             }
             $.ajax(settings).done(function (response) {
+                console.log(response)
                 let i = 0;
                 let new_response = response.features
                 meta_data.push(new_response)
                 var filtered_response = new_response.filter(obj => {
                     return obj.properties.name !== ''
                 })
+
                 if (filtered_response.length > 2) {
+                    console.log(filtered_response)
                     document.querySelector('.container-grid').innerHTML = "";
                     while (i < filtered_response.length - 1) {
                         document.querySelector('.container-grid').innerHTML +=
@@ -165,8 +168,8 @@ $(document).click(e => {
                                     </div><img src="${picture_array[0][(i)].urls.full}" />
                                 </div>
                                 <div class="post-content">
-                                    <div class="category" id="${(filtered_response[(i)].properties.name).replace(/\s+/g, '-').toLowerCase()}" onclick="myFunction()">Add</div>
-                                    <h1 class="title">${filtered_response[(i)].properties.name}</h1>
+                                    <div class="category ${filtered_response[(i)].properties.xid}" id="${(filtered_response[(i)].properties.name).replace(/\s+/g, '-').toLowerCase()}" onclick="myFunction()">Add</div>
+                                    <a target="_blank" href="https://opentripmap.com/en/card/${filtered_response[(i)].properties.xid}" style="text-decoration: none; color: black"><h1 class="title">${filtered_response[(i)].properties.name}</h1></a>
                                     <h2 class="sub_title">${city},  ${country}</h2>
                                     <p class="description">New York, the largest city in the U.S., is an architectural marvel with plenty of historic monuments, magnificent buildings and countless dazzling skyscrapers.</p>
                                     <div class="post-meta"><span class="timestamp"><i class="fa fa-clock-">o</i> 6 mins ago</span><span class="comments"><i class="fa fa-comments"></i><a href="#"> 39 comments</a></span></div>
@@ -191,33 +194,11 @@ function next_page(page_identifier) {
     loading.classList.add('show');
     setTimeout(() => {
         loading.classList.remove('show');
-
-        // setTimeout(() => {
-        // }, 300);
     }, 1000);
-    document.querySelector('.container-grid').innerHTML +=
-        `<div class="box">
-            <div class="post-module">
-            <div class="thumbnail">
-                <div class="date">
-                    <div class="day">27</div>
-                    <div class="month">Mar</div>
-                </div><img src="${picture_array[0][(i)].urls.full}" />
-            </div>
-            <div class="post-content">
-                <div class="category" id="${(meta_data[0][(i) + page_identifier].properties.name).replace(/\s+/g, '-').toLowerCase()}">Add</div>
-                <h1 class="title">${meta_data[0][(i) + page_identifier].properties.name}</h1>
-                <h2 class="sub_title">${city},  ${country}</h2>
-                <p class="description">New York, the largest city in the U.S., is an architectural marvel with plenty of historic monuments, magnificent buildings and countless dazzling skyscrapers.</p>
-                <div class="post-meta"><span class="timestamp"><i class="fa fa-clock-">o</i> 6 mins ago</span><span class="comments"><i class="fa fa-comments"></i><a href="#"> 39 comments</a></span></div>
-            </div>
-            </div>
-        </div>`
 }
 
 
 window.addEventListener('scroll', () => {
-    // console.log(picture_array)
     const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
     let p = 0;
     if (scrollTop + clientHeight >= scrollHeight - 5) {
@@ -252,16 +233,16 @@ $('.basket').mouseout(() => {
 })
 
 function myFunction() {
-    console.log('user' + sessionStorage.getItem('User').replace(/\s+/g, '-').toLowerCase())
-    console.log('country' + country.replace(/\s+/g, '-').toLowerCase())
-    console.log('city' + city[0].replace(/\s+/g, '-').toLowerCase())
-    console.log('place_one' + event.target.id)
+    var xid = (event.target.classList)
+    // console.log(xid[1])
+
     // if (sessionStorage.getItem('User') == null || sessionStorage.getItem('User') == undefined || sessionStorage.getItem('User') == '') {
     let tripData = {
         user: sessionStorage.getItem('User').replace(/\s+/g, '-').toLowerCase(),
         country: country.replace(/\s+/g, '-').toLowerCase(),
         city: city[0].replace(/\s+/g, '-').toLowerCase(),
-        place_one: event.target.id
+        place_one: event.target.id,
+        xid: xid[1]
     }
     $.post("/api/trips", tripData)
     // } else {

@@ -62,13 +62,6 @@ $(document).click(e => {
     }
 })
 
-// $(".logo").mouseover(() => {
-//     $('.express-logo').addClass('hide')
-// })
-// $(".logo").mouseout(() => {
-//     $('.express-logo').removeClass('hide')
-// })
-
 $(".logo").mouseover(() => {
     $('.express-logo').css('display', 'inline-block')
     $('.express-logo').css('color', 'limegreen')

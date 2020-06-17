@@ -15,7 +15,8 @@
 .container-grid {
     height: 100%;
     width: 1100px;
-    margin: 20px auto;
+    margin: 0px 30px;
+    padding-top: 20px;
     columns: 1;
     column-gap: 5px;
   }
@@ -140,8 +141,43 @@ body{overflow:hidden;}
   height: auto;
 }
 .delete{
-  width: 8px;
+  margin-left: 10px;
+  width: 18px;
+  vertical-align: middle;
+  padding-bottom: 3px;
   text-decoration: none;
-  border-radius: 5px;
+  border-radius: 50%;
+  border: 1px solid rgba(0,0,0,.2);
+  color: blue;
   background-color: white;
+}
+
+.delete:hover{
+  font-weight: bolder;
+  border: 1.3px solid rgba(0,0,0,.3)
+  /* padding: 5px; */
+}
+
+.posted-link:hover{
+  color: blue;
+  text-decoration: underline;
+}
+
+.header {
+  height: 50px !important;
+  width: 100% !important;
+  background-color:rgb(103, 201, 103) !important;
+}
+
+.home {
+  color: white !important; 
+  font-weight: bold !important;
+  font-size: 30px !important; 
+  margin-left: 20px !important;
+}
+
+.home:hover{
+  cursor: pointer;
+  color: lightgray;
+  opacity: 80%;
 }

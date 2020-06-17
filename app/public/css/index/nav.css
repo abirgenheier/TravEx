@@ -340,6 +340,7 @@
 }
 
 .logout-button {
+    
     display: none;
     background-color: rgba(0,0,0,.5);
     color: white;

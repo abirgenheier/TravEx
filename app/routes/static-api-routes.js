@@ -32,13 +32,7 @@ module.exports = app => {
 
         })
     })
-    // app.get('/api/all-info', (req, res) => {
-    //     connection.query("SELECT * FROM trips WHERE user = ?", [req.body.user], (err, data) => {
-    //         console.log(data)
-    //         console.log('trips')
-    //         res.json(data)
-    //     })
-    // })
+
     app.get("/api/code/:country?", (req, res) => {
         connection.query("SELECT * FROM code WHERE name = ?", [req.params.country], (err, data) => {
             res.json(data)
