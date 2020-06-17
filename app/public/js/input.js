@@ -186,21 +186,6 @@ $(document).click(e => {
     }
 })
 
-function myFunction() {
-    if (sessionStorage.getItem('User') == null || sessionStorage.getItem('User') == undefined || sessionStorage.getItem('User') == '') {
-        let tripData = {
-            user: sessionStorage.getItem('User').replace(/\s+/g, '-').toLowerCase(),
-            country: country.replace(/\s+/g, '-').toLowerCase(),
-            city: city[0].replace(/\s+/g, '-').toLowerCase(),
-            place_one: event.target.id
-        }
-        $.post("/api/trips", tripData)
-    } else {
-        alert('Error! Please login to continue')
-    }
-
-}
-
 function next_page(page_identifier) {
     const loading = document.querySelector('.loader');
     loading.classList.add('show');
@@ -228,8 +213,9 @@ function next_page(page_identifier) {
             </div>
             </div>
         </div>`
-
 }
+
+
 window.addEventListener('scroll', () => {
     // console.log(picture_array)
     const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
@@ -264,3 +250,22 @@ $('.basket').mouseout(() => {
     $('.basket').removeClass('hover-class')
     $('.number').removeClass('hover-class')
 })
+
+function myFunction() {
+    console.log('user' + sessionStorage.getItem('User').replace(/\s+/g, '-').toLowerCase())
+    console.log('country' + country.replace(/\s+/g, '-').toLowerCase())
+    console.log('city' + city[0].replace(/\s+/g, '-').toLowerCase())
+    console.log('place_one' + event.target.id)
+    // if (sessionStorage.getItem('User') == null || sessionStorage.getItem('User') == undefined || sessionStorage.getItem('User') == '') {
+    let tripData = {
+        user: sessionStorage.getItem('User').replace(/\s+/g, '-').toLowerCase(),
+        country: country.replace(/\s+/g, '-').toLowerCase(),
+        city: city[0].replace(/\s+/g, '-').toLowerCase(),
+        place_one: event.target.id
+    }
+    $.post("/api/trips", tripData)
+    // } else {
+    // alert('Error! Please login to continue')
+    // }
+
+}

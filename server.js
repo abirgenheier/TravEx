@@ -1,5 +1,6 @@
 require('dotenv').config()
 var express = require('express')
+var exphbs = require('express-handlebars')
 var passport = require('passport')
 var GitHubStrategy = require('passport-github')
 var passportConfig = require('./config')
@@ -7,6 +8,9 @@ var app = express()
 var cookieSession = require('cookie-session')
 var PORT = process.env.PORT || 8080;
 require('./passport-setup')
+
+app.engine("handlebars", exphbs({ defaultLayout: "trips" }));
+app.set("view engine", "handlebars");
 
 
 app.use(passport.initialize());

@@ -134,3 +134,14 @@ body{overflow:hidden;}
   position: relative;
   font-size: 30px;
 }
+
+.country-unordered-list{
+  overflow: hidden;
+  height: auto;
+}
+.delete{
+  width: 8px;
+  text-decoration: none;
+  border-radius: 5px;
+  background-color: white;
+}

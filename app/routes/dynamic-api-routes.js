@@ -23,6 +23,25 @@ module.exports = app => {
             console.log('done')
         })
     })
+    app.get('/api/all-trips/:user/:country', (req, res) => {
+        db.Trips.findAll({
+            where:
+            {
+                user: req.params.user,
+                country: req.params.country
+            }
+        }).then(result => {
+            res.json(result)
+            console.log(result)
+        })
+    })
+    app.get('/api/delete_item/:item', (req, res) => {
+        db.Trips.destroy({
+            where: {
+                place_one: req.params.item
+            }
+        })
+    })
 
 }
 
