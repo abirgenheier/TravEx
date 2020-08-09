@@ -1,7 +1,7 @@
 {
-  "name": "1",
+  "name": "TravEx",
   "version": "1.0.0",
-  "description": "",
+  "description": "Integrated travel agency website that allows users to create vision boards and itineraries for upcoming trips. Uses different means of oauth to track users data and to retrieve at a later time and stored via mySQL.",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
